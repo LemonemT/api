@@ -1,6 +1,6 @@
 import http from 'node:http'
 import { PORT } from './config.js'
-import { exportMagazines, importMagazines, getMagazines, index } from './controller.js'
+import { getUsuarios, exportUsuarios, importUsuarios, index } from './controller.js'
 
 const server = http.createServer(async (req, res) => {
   const { url, method } = req
@@ -11,16 +11,16 @@ const server = http.createServer(async (req, res) => {
         index(req, res)
         break
 
-      case '/magazine':
-        getMagazines(req, res)
+      case '/usuarios':
+        getUsuarios(req, res)
         break
 
-      case '/export':
-        exportMagazines(req, res)
+      case '/usuarios/export':
+        exportUsuarios(req, res)
         break
 
-      case '/import':
-        importMagazines(req, res)
+      case '/usuarios/import':
+        importUsuarios(req, res)
         break
 
       default:

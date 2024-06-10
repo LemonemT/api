@@ -9,37 +9,37 @@ export const index = async (req, res) => {
   res.end(contenido)
 }
 
-export const getMagazines = async (req, res) => {
-  const resultado = await pool.query('SELECT * FROM magazine')
-  const magazines = resultado[0]
-  const stringData = JSON.stringify(magazines)
+export const getUsuarios = async (req, res) => {
+  const resultado = await pool.query('SELECT * FROM miniproyecto')
+  const usuarios = resultado[0]
+  const stringData = JSON.stringify(usuarios)
 
   res.writeHead(200, { 'Content-Type': 'application/json' })
   res.end(stringData)
 }
 
-export const exportMagazines = async (req, res) => {
+export const exportusuarios = async (req, res) => {
   try {
-    const resultado = await pool.query('SELECT * FROM magazine')
-    const magazines = resultado[0]
+    const resultado = await pool.query('SELECT * FROM miniproyecto')
+    const usuarios = resultado[0]
 
     //  Obtener cabeceras separado por ','
-    const cabeceras = Object.keys(magazines[0]).join(',')
+    const cabeceras = Object.keys(usuarios[0]).join(',')
 
     //  Armar las filas con el formato: 'dato1,dato2,dato3'
-    const filas = magazines.reduce((acc, magazine) => {
-      const string = `\n${magazine.magazineKey},${magazine.magazineName},${magazine.magazinePrice}`
+    const filas = usuarios.reduce((acc, miniproyecto) => {
+      const string = `\n${miniproyecto.id},${miniproyecto.nombres},${miniproyecto.direccion},${miniproyecto.email},${miniproyecto.dni},${miniproyecto.edad},${miniproyecto.fechadecreacion},${miniproyecto.telefono}`
       return acc + string
     }, '')
 
     const contenido = cabeceras + filas
 
     //   Escribir el contenido del archivo
-    await fs.writeFile('magazine.txt', contenido)
+    await fs.writeFile('usuarios.csv', contenido)
 
     //  Mandar respuesta al servidor indicando éxito
     res.writeHead(200, { 'Content-Type': 'application/json' })
-    res.end(JSON.stringify({ message: 'Datos de las revistas exportados al archivo magazine.txt' }))
+    res.end(JSON.stringify({ message: 'Datos de las revistas exportados al archivo usuarios.csv' }))
   } catch (error) {
     console.log(error)
     res.writeHead(500, { 'Content-Type': 'application/json' })
@@ -47,8 +47,8 @@ export const exportMagazines = async (req, res) => {
   }
 }
 
-export const importMagazines = async (req, res) => {
-  const contenido = await fs.readFile('magazine.txt', 'utf-8')
+export const importUsuarios = async (req, res) => {
+  const contenido = await fs.readFile('usuarios.csv', 'utf-8')
   const filas = contenido.split('\n')
   filas.shift()
 
