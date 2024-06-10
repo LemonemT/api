@@ -18,7 +18,7 @@ export const getUsuarios = async (req, res) => {
   res.end(stringData)
 }
 
-export const exportusuarios = async (req, res) => {
+export const exportUsuarios = async (req, res) => {
   try {
     const resultado = await pool.query('SELECT * FROM miniproyecto')
     const usuarios = resultado[0]
