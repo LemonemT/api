@@ -39,7 +39,7 @@ export const exportUsuarios = async (req, res) => {
 
     //  Mandar respuesta al servidor indicando éxito
     res.writeHead(200, { 'Content-Type': 'application/json' })
-    res.end(JSON.stringify({ message: 'Datos de las revistas exportados al archivo usuarios.csv' }))
+    res.end(JSON.stringify({ message: 'Datos de USUARIOS exportados al archivo usuarios.csv' }))
   } catch (error) {
     console.log(error)
     res.writeHead(500, { 'Content-Type': 'application/json' })
